@@ -1,0 +1,14 @@
+tensorflow
+keras>=3.13.2
+fastapi
+uvicorn
+pillow
+mlflow
+numpy
+python-multipart
+streamlit
+pytest
+requests
+matplotlib
+seaborn
+scikit-learn

@@ -1,0 +1,5 @@
+Metric,Value
+Accuracy,0.8631
+Total_Samples,10000.0
+Correct_Predictions,8631.0
+Incorrect_Predictions,1369.0

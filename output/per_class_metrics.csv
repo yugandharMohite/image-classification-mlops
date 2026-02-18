@@ -1,0 +1,11 @@
+Class,Accuracy,Total_Samples,Correct_Predictions,Incorrect_Predictions
+airplane,0.848,1000,848,152
+automobile,0.966,1000,966,34
+bird,0.807,1000,807,193
+cat,0.663,1000,663,337
+deer,0.827,1000,827,173
+dog,0.772,1000,772,228
+frog,0.97,1000,970,30
+horse,0.9,1000,900,100
+ship,0.94,1000,940,60
+truck,0.938,1000,938,62
