@@ -40,7 +40,6 @@ def home():
 
 @app.post("/predict")
 async def predict(file: UploadFile = File(...)):
-    global model
     if model is None:
         return {"error": "Model is not loaded. Check server logs."}
         
