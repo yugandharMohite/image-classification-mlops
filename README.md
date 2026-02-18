@@ -1,5 +1,7 @@
 # Image Classification Platform - CI/CD Pipeline
 
+![CI/CD Pipeline](https://github.com/yugandharMohite/image-classification-mlops/actions/workflows/ci_cd.yaml/badge.svg)
+
 ## 🎯 Complete CI/CD Implementation
 
 This project now includes a **fully automated CI/CD pipeline** using GitHub Actions, Docker, and pytest.
@@ -13,7 +15,7 @@ This project now includes a **fully automated CI/CD pipeline** using GitHub Acti
 - **[CI_CD_STEP_BY_STEP.md](CI_CD_STEP_BY_STEP.md)** - Detailed walkthrough
 
 ### Reference
-- **[CI/CD Guide](https://github.com/YOUR_USERNAME/YOUR_REPO/blob/main/CI_CD_GUIDE.md)** - Complete documentation
+- **[CI/CD Guide](https://github.com/yugandharMohite/image-classification-mlops/blob/main/CI_CD_STEP_BY_STEP.md)** - Complete documentation
 
 ---
 
@@ -150,4 +152,4 @@ python export_metrics_for_powerbi.py  # Export for Power BI
 
 **Status:** ✅ CI/CD Pipeline Active
 
-![CI/CD Pipeline](https://github.com/YOUR_USERNAME/YOUR_REPO/workflows/CI/CD%20Pipeline/badge.svg)
+![CI/CD Pipeline](https://github.com/yugandharMohite/image-classification-mlops/actions/workflows/ci_cd.yaml/badge.svg)
