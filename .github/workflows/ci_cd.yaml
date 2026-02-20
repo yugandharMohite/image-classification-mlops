@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 name: Yugandhar CI Pipeline
+=======
+name: CI CD pipeline
+>>>>>>> 77dfc04 (Update workflow name to CI CD pipeline)
 
 on:
   push:
