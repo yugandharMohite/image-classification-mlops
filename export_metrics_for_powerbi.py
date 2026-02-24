@@ -76,6 +76,7 @@ def export_classification_report(y_true, y_pred):
     """Export classification report"""
     report = classification_report(y_true, y_pred, target_names=class_names, output_dict=True)
     report_df = pd.DataFrame(report).transpose()
+    report_df.index.name = 'Metric'
     report_df.to_csv("output/classification_report.csv")
     
     print("[OK] Exported classification_report.csv")
@@ -100,22 +101,28 @@ def export_per_class_metrics(y_true, y_pred):
             })
     
     metrics_df = pd.DataFrame(metrics)
+    # Ensure numeric types
+    metrics_df['Total_Samples'] = metrics_df['Total_Samples'].astype(int)
+    metrics_df['Correct_Predictions'] = metrics_df['Correct_Predictions'].astype(int)
+    metrics_df['Incorrect_Predictions'] = metrics_df['Incorrect_Predictions'].astype(int)
+    metrics_df['Accuracy'] = metrics_df['Accuracy'].round(4)
+    
     metrics_df.to_csv("output/per_class_metrics.csv", index=False)
     
     print("[OK] Exported per_class_metrics.csv")
 
 def export_overall_metrics(y_true, y_pred):
-    """Export overall model metrics"""
+    """Export overall model metrics in Wide format for Power BI KPI cards"""
     accuracy = (y_pred == y_true).mean()
+    total = len(y_true)
+    correct = (y_pred == y_true).sum()
+    incorrect = (y_pred != y_true).sum()
     
     metrics = {
-        'Metric': ['Accuracy', 'Total_Samples', 'Correct_Predictions', 'Incorrect_Predictions'],
-        'Value': [
-            accuracy,
-            len(y_true),
-            (y_pred == y_true).sum(),
-            (y_pred != y_true).sum()
-        ]
+        'Accuracy': [round(float(accuracy), 4)],
+        'Total_Samples': [int(total)],
+        'Correct_Predictions': [int(correct)],
+        'Incorrect_Predictions': [int(incorrect)]
     }
     
     metrics_df = pd.DataFrame(metrics)

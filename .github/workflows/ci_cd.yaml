@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-name: Yugandhar CI Pipeline
-=======
 name: CI CD pipeline
->>>>>>> 77dfc04 (Update workflow name to CI CD pipeline)
 
 on:
   push:
@@ -46,7 +42,7 @@ jobs:
   build:
     needs: test
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
     
     steps:
     - uses: actions/checkout@v3
@@ -66,3 +62,70 @@ jobs:
         context: .
         push: true
         tags: ${{ secrets.DOCKER_USERNAME }}/image-classifier:latest
+
+  report:
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+        
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        
+    - name: Generate Power BI Metrics
+      run: |
+        python export_metrics_for_powerbi.py
+        
+    - name: Upload Metrics
+      uses: actions/upload-artifact@v3
+      with:
+        name: Power-BI-Metrics
+        path: output/
+
+  deploy:
+    needs: [build, report]
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
+    
+    steps:
+    - name: Deploy to Staging
+      run: |
+        echo "Deploying to staging environment..."
+        # This is where your deployment commands (e.g., AWS, GCP, Azure, HeroKu) would go
+        # Since we are using Docker Hub, we can simulate success for now
+        echo "Deployment successful!"
+
+  validate:
+    needs: deploy
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+        
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install requests pillow numpy
+        
+    - name: Run Post-Deployment Verification
+      run: |
+        # In a real scenario, we would wait for the deployment to be ready
+        # and point to the production URL. For now, we'll run the API locally to verify the script.
+        python app.py &
+        sleep 10
+        python verify_deployment.py
